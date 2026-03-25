@@ -1,0 +1,11 @@
+{
+  "name": "rss-news",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "scripts": {
+    "tailwindmini": "tailwindcss -i ./input.css -o ./style.css --minify"
+  }
+}
