@@ -5,11 +5,7 @@
   "description": "Clean and minimal RSS news feed on your new tab.",
   "author": "Remal Mahmud",
   "permissions": ["storage", "alarms", "contextMenus"],
-  "host_permissions": [
-    "https://www.aljazeera.com/*",
-    "https://images.unsplash.com/*",
-    "https://source.unsplash.com/*"
-  ],
+  "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html"
   },
@@ -17,7 +13,7 @@
     "newtab": "newtab.html"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "scripts/background.js"
   },
   "icons": {
     "128": "icon.png"

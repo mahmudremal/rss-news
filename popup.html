@@ -3,10 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <title>RSS Config</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles/fonts.css" />
+    <link rel="stylesheet" href="styles/style.css" />
   </head>
-  <body class="w-80 p-6 bg-zinc-50 font-sans">
-    <h2 class="text-xl font-bold mb-4 text-zinc-900">RSS Feeds</h2>
+  <body
+    class="w-80 p-6 bg-zinc-50"
+    style="font-family: &quot;Inter&quot;, &quot;Noto Sans&quot;, sans-serif"
+  >
+    <h2
+      class="text-xl font-bold mb-4 text-zinc-900"
+      style="font-family: &quot;Outfit&quot;, sans-serif"
+    >
+      RSS Feeds
+    </h2>
 
     <div class="mb-4">
       <label
@@ -28,11 +37,50 @@
     </button>
 
     <div class="mt-4 flex items-center justify-between">
-      <label for="offline-toggle" class="text-xs font-semibold text-zinc-500 uppercase tracking-wider" style="cursor: pointer;">Offline Reading</label>
-      <label style="position: relative; display: inline-flex; align-items: center; cursor: pointer;">
-        <input type="checkbox" id="offline-toggle" style="opacity: 0; width: 0; height: 0; position: absolute;">
-        <div id="toggle-bg" style="width: 36px; height: 20px; background-color: #e4e4e7; border-radius: 9999px; transition: background-color 0.2s; position: relative;">
-          <div id="toggle-dot" style="position: absolute; top: 2px; left: 2px; background-color: white; border-radius: 50%; width: 16px; height: 16px; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></div>
+      <label
+        for="offline-toggle"
+        class="text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+        style="cursor: pointer"
+        >Offline Reading</label
+      >
+      <label
+        style="
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          cursor: pointer;
+        "
+      >
+        <input
+          type="checkbox"
+          id="offline-toggle"
+          style="opacity: 0; width: 0; height: 0; position: absolute"
+        />
+        <div
+          id="toggle-bg"
+          style="
+            width: 36px;
+            height: 20px;
+            background-color: #e4e4e7;
+            border-radius: 9999px;
+            transition: background-color 0.2s;
+            position: relative;
+          "
+        >
+          <div
+            id="toggle-dot"
+            style="
+              position: absolute;
+              top: 2px;
+              left: 2px;
+              background-color: white;
+              border-radius: 50%;
+              width: 16px;
+              height: 16px;
+              transition: transform 0.2s;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            "
+          ></div>
         </div>
       </label>
     </div>
@@ -50,6 +98,6 @@
       <p class="text-[10px] text-zinc-400 mt-2">mahmudremal@yahoo.com</p>
     </div>
 
-    <script src="popup.js"></script>
+    <script src="scripts/popup.js"></script>
   </body>
 </html>

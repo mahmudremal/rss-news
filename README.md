@@ -27,11 +27,9 @@ Since this extension is not currently published on the Chrome Web Store, you can
 ## ⚙️ How To Use
 
 1. Click on the extension icon in your toolbar to open the config popup.
-2. Paste any valid RSS XML feeds you prefer and click **Save & Refresh**.
+2. Paste any valid RSS XML feeds (comma seperated) you prefer and click **Save & Refresh**.
 3. Toggle the **Offline Reading** switch to pre-fetch reading modes for the top 5 articles automatically.
-4. Click "Read More →" on any article.
-   - If Offline Reading is **enabled**, it opens inside a stunning translucent modal.
-   - If Offline Reading is **disabled**, it navigates you directly to the original publisher's website.
+4. Click "Read More →" on any article to see it in full.
 
 ## 🛠️ Development
 

@@ -1,0 +1,28 @@
+/* Outfit - Good for headers and clock */
+@font-face {
+  font-family: 'Outfit';
+  src: url('../assets/fonts/Outfit-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Inter - Modern, high-legibility UI font */
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/Inter-Variable.ttf') format('truetype'),
+       url('../assets/fonts/Inter-Italic-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: auto;
+  font-display: swap;
+}
+
+/* Noto Sans - Universal language support fallback */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../assets/fonts/NotoSans-Variable.ttf') format('truetype'),
+       url('../assets/fonts/NotoSans-Italic-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: auto;
+  font-display: swap;
+}

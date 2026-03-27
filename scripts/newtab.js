@@ -3,44 +3,62 @@ let g_news = [];
 
 function updateClock() {
   const now = new Date();
-  const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-  const date = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
-  
-  document.getElementById('clock').textContent = time;
-  document.getElementById('date').textContent = date;
+  const time = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const date = now.toLocaleDateString([], {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+
+  document.getElementById("clock").textContent = time;
+  document.getElementById("date").textContent = date;
 }
 
 async function loadContent() {
-  const { news, lastImage, offlineReadingEnabled } = await chrome.storage.local.get(['news', 'lastImage', 'offlineReadingEnabled']);
+  const { news, lastImage, offlineReadingEnabled } =
+    await chrome.storage.local.get([
+      "news",
+      "lastImage",
+      "offlineReadingEnabled",
+    ]);
   g_offlineReadingEnabled = offlineReadingEnabled || false;
   g_news = news || [];
-  
+
   // Update Background
   if (lastImage) {
-    document.body.style.backgroundImage = `url('${lastImage}')`;
+    document.getElementById("bg-image").style.backgroundImage =
+      `url('${lastImage}')`;
   }
 
   // Update News
-  const container = document.getElementById('news-container');
+  const container = document.getElementById("news-container");
   if (!g_news || g_news.length === 0) {
     container.innerHTML = `<div class="col-span-full text-center glass p-8 rounded-2xl">Fetching latest news...</div>`;
     return;
   }
 
-  container.innerHTML = g_news.map((item, index) => `
+  container.innerHTML = g_news
+    .map(
+      (item, index) => `
     <article class="glass p-6 rounded-2xl flex flex-col h-full hover:bg-white/20 transition-all duration-300 group">
       <h2 class="text-xl font-medium mb-3 line-clamp-2 leading-snug group-hover:text-amber-200 transition-colors">${item.title}</h2>
       <p class="text-white/70 text-sm mb-4 line-clamp-3 leading-relaxed">${item.description}</p>
       <div class="mt-auto flex justify-between items-center text-xs opacity-60">
-        <span>${new Date(item.pubDate).toLocaleDateString()}</span>
+        <span>${item?.pubDate ? new Date(item.pubDate).toLocaleDateString() : item?.link ? new URL(item.link)?.hostname : ""}</span>
         <a href="${item.link}" data-index="${index}" class="read-more-btn hover:underline flex items-center">Read More &rarr;</a>
       </div>
     </article>
-  `).join('');
+  `,
+    )
+    .join("");
 
   // Attach event listeners for article modal
-  document.querySelectorAll('.read-more-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  document.querySelectorAll(".read-more-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
       if (g_offlineReadingEnabled) {
         e.preventDefault();
         openModal(g_news[e.currentTarget.dataset.index]);
@@ -67,7 +85,7 @@ function extractWithReadability(html, url) {
 }
 
 async function cacheFullArticles(newsItems) {
-  const { articleCache = {} } = await chrome.storage.local.get('articleCache');
+  const { articleCache = {} } = await chrome.storage.local.get("articleCache");
   let cacheUpdated = false;
 
   // Fetch only top 5 articles like the user snippet suggested to save ops & network.
@@ -92,19 +110,23 @@ async function cacheFullArticles(newsItems) {
 }
 
 async function openModal(newsItem) {
-  const modal = document.getElementById('article-modal');
-  const modalTitle = document.getElementById('modal-title');
-  const modalArticle = document.getElementById('modal-article');
-  const modalOriginalLink = document.getElementById('modal-original-link');
+  const modal = document.getElementById("article-modal");
+  const modalTitle = document.getElementById("modal-title");
+  const modalArticle = document.getElementById("modal-article");
+  const modalOriginalLink = document.getElementById("modal-original-link");
 
   modalTitle.textContent = newsItem.title;
+  modalTitle.setAttribute(
+    "title",
+    newsItem.title?.length >= 70 ? newsItem.title : "",
+  );
   modalOriginalLink.href = newsItem.link;
-  modalArticle.innerHTML = '<div class="flex items-center justify-center p-12"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-900"></div></div>';
-  
-  modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+  modalArticle.innerHTML = `${newsItem?.description && `<div class="w-full flex flex-col items-center justify-center p-12">${newsItem.description}</div>`}<div class="w-full flex flex-col items-center justify-center p-12"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-200"></div></div>`;
 
-  const { articleCache = {} } = await chrome.storage.local.get('articleCache');
+  modal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+
+  const { articleCache = {} } = await chrome.storage.local.get("articleCache");
   let content = articleCache[newsItem.link];
 
   if (!content) {
@@ -120,19 +142,25 @@ async function openModal(newsItem) {
     }
   }
 
-  modalArticle.innerHTML = content || `<p class="text-red-500 font-sans text-base">No content could be extracted.</p>`;
+  modalArticle.innerHTML =
+    content ||
+    `<p class="text-red-500 font-sans text-base">No content could be extracted.</p>`;
+
+  if (window.translator) {
+    window.translator.setOriginals(newsItem.title, modalArticle.innerHTML);
+  }
 }
 
-document.getElementById('close-modal')?.addEventListener('click', () => {
-  const modal = document.getElementById('article-modal');
-  modal.style.display = 'none';
-  document.body.style.overflow = '';
+document.getElementById("close-modal")?.addEventListener("click", () => {
+  const modal = document.getElementById("article-modal");
+  modal.style.display = "none";
+  document.body.style.overflow = "";
 });
 
 // Close modal when clicking outside
-document.getElementById('article-modal')?.addEventListener('click', (e) => {
-  if (e.target.id === 'article-modal') {
-    document.getElementById('close-modal').click();
+document.getElementById("article-modal")?.addEventListener("click", (e) => {
+  if (e.target.id === "article-modal") {
+    document.getElementById("close-modal").click();
   }
 });
 

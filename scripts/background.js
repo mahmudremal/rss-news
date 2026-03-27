@@ -1,4 +1,9 @@
-const DEFAULT_RSS = ["https://www.aljazeera.com/xml/rss/all.xml"];
+const DEFAULT_RSS = [
+  "https://www.presstv.ir/rss.xml",
+  "https://www.telesurenglish.net/feed/",
+  "https://www.middleeastmonitor.com/feed/",
+  "https://www.aljazeera.com/xml/rss/all.xml",
+];
 const IMAGE_FETCH_INTERVAL = 60; // 60 minutes
 const RSS_FETCH_INTERVAL = 30; // 30 minutes
 
